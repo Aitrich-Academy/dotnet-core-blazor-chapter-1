@@ -12,7 +12,7 @@ namespace HireMeNow_BlazorApp.Repositories
 		new Job("Angular Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich"),
 		new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich"),
 		new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich")};
-		private readonly List<Job> _jobs;
+		
 	
 
 		public void DeleteById(Guid id)
@@ -26,8 +26,7 @@ namespace HireMeNow_BlazorApp.Repositories
 
 		public List<Job> getByTitle(string title)
 		{
-			//List<Job> job= (List<Job>)jobs.Where(e => e.Title == title);
-			//return job;
+			
 			return jobs.Where(j => j.Title.ToLower().Contains( title.ToLower())).ToList();
 
 
