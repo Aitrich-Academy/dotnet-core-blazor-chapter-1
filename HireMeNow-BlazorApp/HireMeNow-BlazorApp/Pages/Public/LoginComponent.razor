@@ -3,18 +3,20 @@
 @layout LoginLayout
 @inject IUserService _userService
 @inject NavigationManager NavManager
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 <div class="container containerDiv">
 
     <div class="col-md-8 wrapperDiv">
         <div class="col-md-6 leftDiv">
             <div>
-                <form class="loginform" method="post">
-                    <img src="~/publicassets/images/logo.png" alt="" width="60px" />
+                <form class="loginform">
+                    <img src="publicassets/images/logo.png" alt="" width="60px" />
                     <font size="6" face="DM Sans"> <b>Welcome Back</b> </font>
                     <br>
                     <section class="googleDiv">
-                        <img src="~/publicassets/images/google.png" width="20px" align="top" alt="" />
+                        <img src="publicassets/images/google.png" width="20px" align="top" alt="" />
                        
 
                         &nbsp;  <b>Log in with Google </b>
@@ -25,7 +27,7 @@
                         <b> OR LOGIN WITH EMAIL </b>
                     </font>
                     <div class="row">
-                        <div class="errors" asp-validation-summary="All"></div>
+                        <div class="errors" asp-validation-summary="All">@Error</div>
                     </div>
 
                     <div class="mb-3 mt-3">
@@ -43,7 +45,7 @@
                     <br>
                     <button type="button" class="btn btn-primary btnlogin" @onclick="Login">Login</button>
                     <br>
-                    <font size="3" face="Roboto"> Don’t have an account yet ? </font> <a href="Registration">
+                    <font size="3" face="Roboto"> Don’t have an account yet ? </font> <a href="Register">
                         <font color="49A1D3" size="3" face="Roboto"> Sign up </font>
                     </a>
 
@@ -68,15 +70,22 @@
     [Parameter]
     public string Password { get; set; }
 
+    [Parameter]
+    public string? Error { get; set; }
 
 
-
-    private void Login()
+    private async void Login()
     {
+        Error = "";
         var result = _userService.login(Email, Password);
         if (result!=null)
         {
-            NavManager.NavigateTo("/");
+            await ProtectedSessionStore.SetAsync("userId", result.Id);
+            NavManager.NavigateTo("/profile");
+        }
+        else
+        {
+            Error = "Login Failed";
         }
     }
 

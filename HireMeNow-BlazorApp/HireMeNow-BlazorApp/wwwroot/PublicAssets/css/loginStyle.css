@@ -10,9 +10,19 @@
 }
 
 .wrapperDiv {
-    margin-top: 10%;
+    margin-top: 5%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapperRegDiv {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row-reverse;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
@@ -29,6 +39,22 @@
     box-shadow: 1px 1px 4px 0px #303030de;
     border-top-left-radius: 10%;
     border-bottom-left-radius: 10%;
+    background-color: white;
+    padding: 30px;
+}
+
+.wrapperRegDiv .leftDiv {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 1px 1px 4px 0px #303030de;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0%;
     background-color: white;
     padding: 30px;
 }
@@ -78,7 +104,39 @@
     border-top-right-radius: 10%;
     border-bottom-right-radius: 10%;
 }
-.errors{
-    color:red;
 
+.wrapperRegDiv .rightDiv {
+    background-image: url('../images/register img.png');
+    background-position: initial;
+    background-size: cover;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+.errors {
+    color: red;
+}
+
+.registerDivFooter {
+    justify-content: space-around;
+}
+    .registerDivFooter .btn {
+        width:100%;
+    }
+    @media (max-width: 700px) {
+        .wrapperRegDiv .rightDiv {
+        display: none;
+    }
+    .wrapperRegDiv .leftDiv {
+        border-radius: 25px;
+    }
+
+        .rightDiv {
+            display: none;
+          
+        }
+        .leftDiv {
+            border-radius: 20px;
+        }
 }
