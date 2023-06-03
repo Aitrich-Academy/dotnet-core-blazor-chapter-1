@@ -1,0 +1,30 @@
+﻿@page "/memberRegister"
+@using AutoMapper;
+@using HireMeNow_BlazorApp.Dtos;
+@using HireMeNow_BlazorApp.Exceptions;
+@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+@layout JobProviderLayoutComponent
+@inject NavigationManager NavManager
+@inject IMapper _mapper
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md">
+                   
+                    <div class="container">
+
+                        <FormComponent></FormComponent>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+  
+}

@@ -85,6 +85,11 @@ namespace HireMeNow_BlazorApp.Repositories
             var memberList = users.Where(e=>e.Role==Roles.CompanyMember&& e.companyId==companyId).ToList();
             return memberList;
         }
+		public List<User> jobseekerListing()
+		{
+			var memberList = users.Where(e => e.Role == Roles.JobSeeker).ToList();
+			return memberList;
+		}
 
 		public User getuser()
 		{
