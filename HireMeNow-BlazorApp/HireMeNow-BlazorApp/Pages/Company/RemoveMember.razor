@@ -1,0 +1,70 @@
+﻿@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+@inject ICompanyService _companyService
+@inject IUserService _userService
+@inject NavigationManager navmanager
+
+<div class="col-md-8 p-5 mt-3 border rounded mx-auto d-block bg-light">
+	<form>
+		<div class="row pt-5 pl-5 pr-5">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="userid">UserID</label>
+					<input type="text" @bind=id class="form-control border-bottom-0" aria-describedby="userid" placeholder="Please enter userID" style="border-style: inset">
+				</div>
+			</div>
+		</div>
+		<div class="row pl-5 pr-5">
+			<div class="col-md-6">
+				<div class="  form-group">
+					<label for="name">Name</label>
+					<input type="text" @bind=member.FirstName class ="form-control w-80 border-bottom-0" placeholder="Please enter first name" style="border-style: inset">
+				</div>
+			</div>
+			<div class="col-md-5">
+				<button class="btn bg-primary mt-4" @onclick=Remove >Remove</button>
+			</div>
+		</div>
+		<div class="row pl-5 pr-5 pb-5">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="designation">Designation</label>
+					<input type="text" @bind=member.Designation class="form-control border-inset border-bottom-0" placeholder="Please enter designation" style="border-style: inset">
+				</div>
+			</div>
+		</div>
+
+	</form>
+</div>
+
+@code {
+	[Parameter]
+	public Guid id { get; set; }
+	[Parameter]
+	public User member { get; set; } = new();
+
+	private void Remove()
+	{
+
+		_companyService.memberDeleteById(id);
+		navmanager.NavigateTo("memberlisting");
+
+		//NavManager.NavigateTo("/memberlisting");
+	}
+	protected override void OnInitialized()
+	{
+		//check for id
+		if (id != null)
+		{
+			var mem = _userService.getById(id);
+			if (mem != null)
+			{
+				member = mem;
+			}
+		}
+		
+		
+
+
+	}
+}

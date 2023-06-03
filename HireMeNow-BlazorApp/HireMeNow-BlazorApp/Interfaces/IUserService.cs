@@ -9,5 +9,6 @@ namespace HireMeNow_BlazorApp.Interfaces
         User register(User user);
         User Update(User user);
         List<User> getAllUsers();
-    }
+		public List<User> jobseekerListing();
+	}
 }

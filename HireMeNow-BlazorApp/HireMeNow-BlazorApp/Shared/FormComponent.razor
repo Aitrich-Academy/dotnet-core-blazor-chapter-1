@@ -1,0 +1,112 @@
+﻿@using AutoMapper;
+@using HireMeNow_BlazorApp.Dtos;
+@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+@inject ICompanyService _companyService
+@inject NavigationManager NavManager
+@inject IMapper _mapper
+					
+
+
+
+
+			<div class="row">
+				<div class="col-md " style="background-color: #f5f5fa;">
+					<div class="row pt-5">
+						<div class="col-md-6 text-right ">
+							<a class="text-dark " href="#"><h4>Remove Member</h4></a>
+						</div>
+						<div class="col-md-6 text-left">
+							<a class="text-dark" href="#"><h4>List Of Members</h4></a>
+						</div>
+					</div>
+					<div class="row">
+					
+							<div class="col-md-9 p-5 mx-auto d-blok border rounded bg-light mb-5">
+							<div class="row">
+								<div class="col-md-12">
+									<h3 class="h1 fluid text-center p-2">Registration Of New Member</h3>
+								</div>
+							</div>
+							<form asp-action="PostJob">
+									<div class="row mt-3 ">
+										<div class="col-md-5 ml-5 ">
+											<div class="form-group">
+												<label><strong>First Name</strong></label><br>
+								<input class="form-control border-dark" @bind="user.FirstName" type="text" name="fname" placeholder="Please enter first name"><br>
+											</div>
+											<div class="form-group">
+												<label><strong>Email</strong></label><br>
+								<input class="form-control border-dark" @bind="user.Email" type="text" name="email" placeholder="Enter Email"><br>
+											</div>
+											<div class="form-group">
+												<label><strong>Deignation</strong></label><br>
+								<input class="form-control border-dark" @bind="user.Designation" type="text" name="designation" placeholder="Please enter Designation"><br>
+											</div>
+											<div class="form-group">
+												<label><strong>Password</strong></label><br>
+								<input class="form-control border-dark" @bind="user.Password" type="password" name="password" placeholder="Password"><br>
+											</div>
+										</div>
+
+										<div class="col-md-5 ml-2 ">
+											<div class="form-group">
+												<label><strong>LastName</strong></label><br>
+								<input class="form-control border-dark" type="text" @bind="user.LastName" name="lname" placeholder="Please enter Last name"><br>
+											</div>
+											<div class="form-group">
+												<label><strong>PhoneNumber</strong></label><br>
+								<input class="form-control border-dark" type="text" @bind="user.Phone" name="phone" placeholder="phone Number"><br>
+											</div>
+											<div class="form-group">
+												<label><strong>UserID</strong></label><br>
+								<input class="form-control border-dark" type="text" @bind="user.Id" name="userid" placeholder="Please enter User ID"><br>
+											</div>
+											<div class="form-group">
+												<label><strong>ConfirmPassword</strong></label><br>
+												<input class="form-control border-dark" type="password" @bind="user.ConfirmPassword" name="password" placeholder="Confirm Password"><br>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-10 mx-auto d-block">
+											<button class="btn  bg-success mx-auto d-block" @onclick="@Add">REGISTER</button>
+										</div>
+									</div>
+							</form>
+							
+						</div>
+						
+
+						
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+
+
+
+@code {
+	User obj = new User();
+	[Parameter]
+	public UserDto user { get; set; } = new();
+
+	protected void Add()
+	{
+		var userModel = _mapper.Map<User>(user);
+		Guid cmpId = new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4");
+		userModel.companyId = cmpId;
+		var result = _companyService.memberRegister(userModel);
+		if (result != null)
+		{
+			NavManager.NavigateTo("/memberLIsting");
+
+		}
+	}
+	
+}

@@ -1,0 +1,55 @@
+﻿@inject IUserService _userService
+
+@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+<style>
+	.memberBox {
+		box-shadow: 2px 7px 9px 0px #262323e3;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+</style>
+
+<div class="row bg-light">
+	<div class="col-md-10 bg-white border rounded m-5 p-5">
+		@if (seekerList.Count > 0)
+		{
+			<div class="row">
+				@foreach (var user in seekerList)
+				{
+					<div class="col-md-4 mr-5 bg-white p-4 memberBox">
+						<img class="img-fluid" src="publicassets/images/gray-user.png" width="150px">
+						<br>
+						<strong></strong><br>
+						<h5>
+							@user.FirstName<br>
+							@*@if (user.Educations.Count > 0)
+							{
+								@user.Educations[0].Course<br>
+							}*@
+							@user.Email
+						</h5>
+						<button class="btn bg-primary rounded-pill mx-auto d-block">View</button>
+						@*<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="RemoveMember/@user.id">*@
+@*						<button class="btn btn-outline-danger rounded-pill mx-auto d-block" @onclick="@(() => removeMember(user.Id))">Remove</button>
+*@
+						@*</NavLink>*@
+					</div>
+				}
+
+
+			</div>
+		}
+	</div>
+</div>
+
+@code {
+	List<User> seekerList;
+
+	protected override void OnInitialized()
+	{
+		Guid cmpId = new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4");
+		seekerList = _userService.jobseekerListing();
+	}
+}

@@ -25,7 +25,9 @@ namespace HireMeNow_BlazorApp.Services
         {
             return _UserRepository.memberListing(companyId);
         }
-        public void memberDeleteById(Guid id)
+
+
+		public void memberDeleteById(Guid id)
         {
             _UserRepository.memberDeleteById(id);
         }
