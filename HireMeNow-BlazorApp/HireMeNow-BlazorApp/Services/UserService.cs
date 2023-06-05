@@ -40,7 +40,11 @@ namespace HireMeNow_BlazorApp.Services
         {
 			return userRepository.jobseekerListing();
 		}
+        public List<User> jobProviderListing()
+        {
+            return userRepository.jobProviderListing();
+        }
 
 
-	}
+    }
 }

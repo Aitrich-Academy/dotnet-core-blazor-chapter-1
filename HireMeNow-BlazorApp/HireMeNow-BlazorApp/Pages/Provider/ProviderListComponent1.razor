@@ -2,11 +2,11 @@
 @using HireMeNow_BlazorApp.Dtos;
 @using HireMeNow_BlazorApp.Interfaces
 @inject IUserService _userServices
-@foreach(var user in users)
+@foreach (var user in users)
 {
     <div class="col-md-3">
         <div class="card">
-            <img class="img-fluid" src="publicassets/images/gray-user.png" width="150px">
+            <img class="img-fluid" src="publicassets/images/gray-user.png" width="150px" style="align-items:center;">
 
             <div class="card-body text-center">
                 <h5 class="card-title">@user.FirstName</h5>

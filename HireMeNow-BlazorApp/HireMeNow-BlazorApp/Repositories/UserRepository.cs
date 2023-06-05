@@ -90,8 +90,13 @@ namespace HireMeNow_BlazorApp.Repositories
 			var memberList = users.Where(e => e.Role == Roles.JobSeeker).ToList();
 			return memberList;
 		}
+        public List<User> jobProviderListing()
+        {
+            var memberList = users.Where(e => e.Role == Roles.JobProvider).ToList();
+            return memberList;
+        }
 
-		public User getuser()
+        public User getuser()
 		{
 			return users.FirstOrDefault();
 		}
