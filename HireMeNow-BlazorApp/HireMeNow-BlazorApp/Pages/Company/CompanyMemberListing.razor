@@ -1,0 +1,28 @@
+﻿@page "/memberListing"
+@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+@layout JobProviderLayoutComponent
+@inject ICompanyService _companyService
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md">
+                    <div class="container">
+                        <HeaderComponent></HeaderComponent>
+                        <MemberSearchComponent></MemberSearchComponent>
+                       <LisstMember></LisstMember>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+   
+}

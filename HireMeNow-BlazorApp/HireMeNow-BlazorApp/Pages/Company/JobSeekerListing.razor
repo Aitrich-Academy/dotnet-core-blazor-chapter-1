@@ -1,0 +1,26 @@
+﻿@page "/JobseekerListing"
+@using HireMeNow_BlazorApp.Interfaces;
+@inject ICompanyService _companyService
+@layout JobSeekerLayout
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md">
+                    <div class="container">
+                        <HeaderComponent></HeaderComponent>
+                        <MemberSearchComponent></MemberSearchComponent>
+                       <JobSeekerListingComponent></JobSeekerListingComponent>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

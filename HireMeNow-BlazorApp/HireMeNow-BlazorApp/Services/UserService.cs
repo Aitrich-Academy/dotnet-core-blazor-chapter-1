@@ -1,5 +1,6 @@
 ﻿using HireMeNow_BlazorApp.Interfaces;
 using HireMeNow_BlazorApp.Models;
+using HireMeNow_BlazorApp.Repositories;
 
 namespace HireMeNow_BlazorApp.Services
 {
@@ -35,7 +36,11 @@ namespace HireMeNow_BlazorApp.Services
             var updateduser=userRepository.Update(user);
             return updateduser;
         }
+		public List<User> jobseekerListing()
+        {
+			return userRepository.jobseekerListing();
+		}
 
-	
+
 	}
 }

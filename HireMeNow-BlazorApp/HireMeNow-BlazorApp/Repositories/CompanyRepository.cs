@@ -1,4 +1,5 @@
-﻿using HireMeNow_BlazorApp.Exceptions;
+﻿using HireMeNow_BlazorApp.Enums;
+using HireMeNow_BlazorApp.Exceptions;
 using HireMeNow_BlazorApp.Interfaces;
 using HireMeNow_BlazorApp.Models;
 
@@ -28,7 +29,8 @@ namespace HireMeNow_BlazorApp.Repositories
             return company;
         }
 
-        public Company Update(Company company)
+
+		public Company Update(Company company)
         {
             int indexToUpdate = companies.FindIndex(item => item.Id == company.Id);
             if (indexToUpdate != -1)

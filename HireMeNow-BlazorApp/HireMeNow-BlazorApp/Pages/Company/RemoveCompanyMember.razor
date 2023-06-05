@@ -1,0 +1,30 @@
+﻿@page "/removeMember"
+@page "/removeMember/{id}"
+
+@layout JobProviderLayoutComponent
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <MemberSearchComponent></MemberSearchComponent>
+            @if (string.IsNullOrEmpty(id))
+            {
+                <RemoveMember></RemoveMember>
+
+            }else{
+                try{
+
+            <RemoveMember id="new Guid(id)"></RemoveMember>
+                }catch{
+                    <h1>Member Not Found</h1>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string id{ get; set; }
+
+}
