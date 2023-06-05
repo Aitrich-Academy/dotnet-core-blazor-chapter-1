@@ -1,0 +1,100 @@
+﻿@page "/interviewShedule"
+@layout JobProviderLayoutComponent
+@using AutoMapper;
+@using HireMeNow_BlazorApp.Dtos;
+@using HireMeNow_BlazorApp.Exceptions;
+@using HireMeNow_BlazorApp.Interfaces;
+@inject IInterviewServices _interviewServices
+@using HireMeNow_BlazorApp.Models;
+@inject IMapper _mapper;
+@inject NavigationManager NavManager
+
+
+	<div class="col-md-10">
+		
+		<div class="row">
+			<div class="col-md-11 shadow-sm">
+				<div class="row">
+					<div class="col-md-11">
+						<h3 class="h3-default text-right mr-5 ">Short List</h3>
+					</div>
+				</div>
+
+				<div class="row">
+
+
+					<div class="col-md-10 mx-auto d-block border-top ">
+						<form>
+							<div class="form-group text-dark">
+								<label><h4>Job Title</h4></label>
+								<input type="text" @bind="interview.Post" name="name" placeholder="Select Jobtitle" class="form-control bg-light p-4 border-0 rounded ">
+								<!-- <select class="form-select bg-light p-4 border-0 rounded" aria-label="Default select example">
+									<option selected>Select Jobtitle</option>
+									<option value="1">One</option>
+									<option value="2">Two</option>
+									<option value="3">Three</option>
+								</select> -->
+							</div>
+							<div class="form-group text-dark p-1">
+								<label><h4>Date</h4></label>
+								<img class="img-fluid float-right" src="JobProvider/InterviewShedule/images/calendar (4) 1.png">
+								<input type="date" @bind="interview.Date" name="date" placeholder="Select Date" class="form-control bg-light p-4 border-0 rounded w-75 ">
+							</div>
+							<div class="form-group text-dark p-1">
+								<label><h4>Time</h4></label>
+								<img class="img-fluid float-right" src="JobProvider/InterviewShedule/images/clock 1.png">
+								<input type="time" name="time" @bind="interview.Time" placeholder=" Enter time" class="form-control bg-light p-4 border-0 rounded w-75">
+							</div>
+							<div class="form-group text-dark p-2">
+								<label><h4>Location</h4></label>
+								<img class="img-fluid float-right" src="JobProvider/InterviewShedule/images/location 1.png">
+								<input type="text" name="location" @bind="interview.Location" placeholder="Enter location" class="form-control bg-light p-4 border-0 rounded mb-5 w-75">
+							</div>
+							<div class="form-group d-inline ">
+								<button class="btn  text-white mr-5 bg-primary text-white" @onclick="@sheduleinterview">Send</button>
+								<label><h5>Push Notification</h5></label>
+								<img class="img-fluid mr-5" src="JobProvider/InterviewShedule/images/Group 14.png">
+								<label><h5>Email Notifications</h5></label>
+								<img class="img-fluid" src="JobProvider/InterviewShedule/images/Group 14.png">
+							</div>
+						</form>
+						<p>@msg</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+   
+
+
+@code {
+
+	[Parameter]
+	public string Error { get; set; }
+	[Parameter]
+	public string? msg { get; set; }
+
+	[Parameter]
+	public InterviewDto interview { get; set; } = new();
+	public void sheduleinterview()
+	{
+		Error = "";
+		try
+		{
+			var interviewmodel = _mapper.Map<Interview>(interview);
+			var result = _interviewServices.sheduleinterview(interviewmodel);
+			if (result != null)
+			{
+				//NavManager.NavigateTo($"/SheduledinterviewList");
+				NavManager.NavigateTo("/");
+			}
+
+			}
+			catch (Exception ex)
+			{
+				NavManager.NavigateTo("/");
+			}
+		}
+
+}

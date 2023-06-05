@@ -1,0 +1,31 @@
+﻿@using HireMeNow_BlazorApp.Models;
+@using HireMeNow_BlazorApp.Dtos;
+@using HireMeNow_BlazorApp.Interfaces
+@inject IUserService _userServices
+<div class="col-md-3">
+    <div class="card">
+        <img src="../../assets/images/companyLogo.png" class="img-fluid card-img-top mx-auto d-block mt-3 px-5" alt="Card Image" style="width: 200px;">
+        <div class="card-body text-center">
+            <h5 class="card-title">name 2</h5>
+            <p class="card-text">MCA 2</p>
+            <div class="d-flex justify-content-between">
+                <button class="remove btn rounded-pill mr-2">REMOVE</button>
+                <button class="block btn rounded-pill">BLOCK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+    [Parameter]
+    public Interview User { get; set; }
+    List<Interview> users;
+
+    protected override void OnInitialized()
+    {
+        
+    }
+
+}
