@@ -1,5 +1,9 @@
 ﻿@using HireMeNow_BlazorApp.Interfaces
 @using HireMeNow_BlazorApp.Models
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+@inject IApplicationService applicatioService
+@inject ProtectedSessionStorage protectedSessionStore
+@inject NavigationManager NavigationManager
 <style>
     .jobData {
         /*width: 80%;*/
@@ -119,7 +123,7 @@
                                
                             </form>
 
-                            <button class="btn btn-lg bg-primary float-right mx-auto d-block">ApplyJob</button>
+            <button class="btn btn-lg bg-primary float-right mx-auto d-block" @onclick=ApplyJob>ApplyJob</button>
                             <progress id="progressBar" value=@job.Applied max=@job.Capacity></progress>
                             <span class="progressSpan">@job.Applied applied of @job.Capacity capacity</span>
                         </div>
@@ -140,4 +144,11 @@
     public string id { get; set; }
     [Parameter]
     public Job job{ get; set; }
+
+    public void ApplyJob()
+    {
+        var userId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+        applicatioService.AddApplication(job.Id, userId);
+        NavigationManager.NavigateTo("/Jobseeker/MyApplication");
+    }
 }
