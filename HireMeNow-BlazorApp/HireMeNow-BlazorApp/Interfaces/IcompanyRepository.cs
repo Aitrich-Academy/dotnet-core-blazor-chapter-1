@@ -8,5 +8,6 @@ namespace HireMeNow_BlazorApp.Interfaces
         Company? getById(Guid id);
         Company? Register(Company company);
         Company Update(Company company);
-    }
+
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using HireMeNow_BlazorApp.Models;
+using HireMeNow_BlazorApp.Pages.Company;
 
 namespace HireMeNow_BlazorApp.Interfaces
 {
@@ -11,8 +12,8 @@ namespace HireMeNow_BlazorApp.Interfaces
 		User Update(User user);
         User memberRegister(User user);
         List<User> memberListing(Guid companyId);
-
-        List<User> getAllUsers();
+		List<User> jobseekerListing();
+		List<User> getAllUsers();
 
         void memberDeleteById(Guid id);
 
