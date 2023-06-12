@@ -23,5 +23,12 @@ namespace HireMeNow_BlazorApp.Services
 			
 			_applicationRepository.AddApplication(user,job);
 		}
-	}
+
+        public List<Application> GetAll(Guid userId)
+        {
+            
+                return _applicationRepository.GetAll(userId);
+            
+        }
+    }
 }

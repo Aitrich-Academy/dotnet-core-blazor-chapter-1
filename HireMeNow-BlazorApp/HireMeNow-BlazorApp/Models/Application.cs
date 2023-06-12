@@ -13,7 +13,7 @@ namespace HireMeNow_BlazorApp.Models
         public Job Job { get; set; }
         public string Status { get; set; }
         public Guid CompanyId { get; set; }
-        public Application()
+        public Application(string v)
         {
             
         }
