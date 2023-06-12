@@ -1,0 +1,37 @@
+﻿@using HireMeNow_BlazorApp.Models;
+@using HireMeNow_BlazorApp.Interfaces
+@inject IInterviewServices _interviewServices
+@foreach (var interview in interviewList)
+{
+
+	<div class="row">
+		<div class="col-md-12 pb-3 pt-3">
+			<img class="img-fluid float-left pb-5" src="JobProvider/SheduledInterviewList/images/Company Logo.png">
+			<h4 class="h4-fluid">@interview.Post</h4>
+			<p>
+				Date Of Interview :@interview.Date<br>
+				Location/Online:@interview.Location<br>
+				Time:@interview.Time
+			</p>
+			<button class="btn bg-primary text-white mx-auto d-block">View</button>
+		</div>
+
+	</div>
+
+}
+@code {
+	[Parameter]
+	public string id { get; set; }
+	[Parameter]
+	public Interview interview { get; set; }
+	List<Interview> interviewList;
+
+	protected override void OnInitialized()
+	{
+		interviewList = _interviewServices.sheduledInterviewList();
+	}
+
+}
+
+
+
