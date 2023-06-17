@@ -11,6 +11,16 @@
 @layout JobProviderLayoutComponent
 @if (String.IsNullOrWhiteSpace(userId))
 {
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <b>
+                    <a href="/company/profile" style=" color: black;" class="btn btn-light">Company Profile  </a>
+                </b>
+            </li>
+          
+        </ul>
+    </div>
     <ProfileComponent></ProfileComponent>
 }
 else
