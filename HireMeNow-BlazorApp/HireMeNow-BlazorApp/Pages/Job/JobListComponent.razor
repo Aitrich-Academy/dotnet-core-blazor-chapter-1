@@ -1,8 +1,9 @@
-﻿@page "/Job/JobListComponent"
+﻿@page "/Job/JobList"
 @using HireMeNow_BlazorApp.Interfaces
 @using HireMeNow_BlazorApp.Models
 @layout JobComponentLayout
 @inject IJobService Jobservices
+<link href="publicassets/css/home.css" rel="stylesheet" />
     <div>
           <div class="row jobListDiv">
 
@@ -34,7 +35,7 @@ else
 }
  <div class="center">
 
-                <div class="pagination">
+              @*  <div class="pagination">
                 <a href="Job/JobListComponent">&laquo;</a>
                 <a href="Job/JobListComponent" class="active">1</a>
                 <a href="Job/JobListComponent">2</a>
@@ -43,7 +44,7 @@ else
                 <a href="Job/JobListComponent">5</a>
                 <a href="Job/JobListComponent">6</a>
                 <a href="Job/JobListComponent">&raquo;</a>
-                </div>
+                </div>*@
             </div>
 
         </div>

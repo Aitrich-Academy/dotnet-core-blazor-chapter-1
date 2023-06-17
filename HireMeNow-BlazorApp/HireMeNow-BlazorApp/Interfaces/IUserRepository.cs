@@ -16,6 +16,6 @@ namespace HireMeNow_BlazorApp.Interfaces
 		List<User> getAllUsers();
         List<User> jobProviderListing();
         void memberDeleteById(Guid id);
-
-    }
+		void Logout();
+	}
 }

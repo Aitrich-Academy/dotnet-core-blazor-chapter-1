@@ -1,5 +1,9 @@
 ﻿@inherits LayoutComponentBase
-
+@inject NavigationManager NavManager
+@using HireMeNow_BlazorApp.Interfaces;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+@inject IUserService _userService
 <PageTitle>HireMeNow</PageTitle>
 <style>
 	body, html {
@@ -88,7 +92,7 @@
 
 							<li class="list-group-item border-0  ">
 								<div class="nav-item px-3">
-									<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="fetchdata">
+									<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="Jobseeker/Jobs">
 										<img src="jobseekerassets/images/buildings-2.png" alt="hugenerd" width="30" height="30">
 										<span class=" d-sm-inline mx-1">All Jobs</span>
 									</NavLink>
@@ -97,7 +101,7 @@
 							</li>
 							<li class="list-group-item border-0  ">
 								<div class="nav-item px-3">
-									<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="fetchdata">
+									<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="Jobseeker/MyApplication">
 										<img src="jobseekerassets/images/clipboard-text.png" alt="hugenerd" width="30" height="30">
 										<span class=" d-sm-inline mx-1">My Applications</span>
 									</NavLink>
@@ -105,22 +109,25 @@
 								
 							</li>
 							<li class="list-group-item border-0  ">
-								<a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1">
+								<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="#">
 									<img src="jobseekerassets/images/message-2.png" alt="hugenerd" width="30" height="30">
 									<span class=" d-sm-inline mx-1">Messages</span>
-								</a>
+								</NavLink>
+							
 							</li>
 							<li class="list-group-item border-0  ">
-								<a href="~/User/Index" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1">
+								<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="user/profile">
 									<img src="jobseekerassets/images/profile.png" alt="hugenerd" width="30" height="30">
-									<span class="d-sm-inline mx-1">My Profile</span>
-								</a>
+									<span class=" d-sm-inline mx-1">My Profile</span>
+								</NavLink>
+								
 							</li>
 							<li class="list-group-item border-0  ">
-								<a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1">
+								<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="#">
 									<img src="jobseekerassets/images/setting-2.png" alt="hugenerd" width="30" height="30">
 									<span class=" d-sm-inline mx-1">Settings</span>
-								</a>
+								</NavLink>
+								
 							</li>
 
 							@*<li class="list-group-item border-0  ">
@@ -147,7 +154,11 @@
 							<option ><strong>Logout</strong></option>
 
 						</select>*@
-						<a href="~/public/login?Action=logout" class="btn btn-outline-primary float-right">Logout</a>
+						@*<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="fetchdata">
+							<img src="jobseekerassets/images/buildings-2.png" alt="hugenerd" width="30" height="30">
+							<span class=" d-sm-inline mx-1">All Jobs</span>
+						</NavLink>*@
+						<button class="btn btn-outline-primary float-right" @onclick="Logout">Logout</button>
 						<img class="img-fluid float-right pt-2 m-2 " src="jobseekerassets/images/gray-user.png" width="30px" height="30px">
 						<img class="img-fluid float-right pt-2 m-2 " src="jobseekerassets/images/notification-bing.png" width="30px" height="30px">
                     </div>
@@ -264,3 +275,11 @@
 
     
 </div>
+@code{
+	public async void Logout()
+	{
+		await ProtectedSessionStore.DeleteAsync("userId");
+		_userService.Logout();
+		NavManager.NavigateTo("/login", forceLoad: true);
+	}
+}

@@ -7,11 +7,11 @@ namespace HireMeNow_BlazorApp.Repositories
 {
     public class JobRepository : IJobRepository
     {
-        private List<Job> jobs = new List<Job> { new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich",new Guid("62ec44fb-9f30-4f45-8e3d-f3751998af89")),
-		new Job("Java Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich"),
-		new Job("Angular Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich"),
-		new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich"),
-		new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid(),"Aitrich")};
+        private List<Job> jobs = new List<Job> { new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid("2c8303fb-c1e1-4fa6-a2e1-272472b4beb5"),"Aitrich",new Guid("62ec44fb-9f30-4f45-8e3d-f3751998af89")),
+		new Job("Java Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid("2c8303fb-c1e1-4fa6-a2e1-272472b4beb5"),"Aitrich"),
+		new Job("Angular Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid("2c8303fb-c1e1-4fa6-a2e1-272472b4beb5"),"Aitrich"),
+		new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid("2c8303fb-c1e1-4fa6-a2e1-272472b4beb5"),"Aitrich"),
+		new Job("Dotnet Developer","Senior dotnet developer .","kochi","Fulltime","100000-300000",new Guid("2c8303fb-c1e1-4fa6-a2e1-272472b4beb5"),"Aitrich")};
 		
 	
 
@@ -73,6 +73,8 @@ namespace HireMeNow_BlazorApp.Repositories
 				jobs[indexToUpdate].TypeOfWork = Updatedjob.TypeOfWork ?? jobs[indexToUpdate].TypeOfWork;
 				jobs[indexToUpdate].Experience = Updatedjob.Experience ?? jobs[indexToUpdate].Experience;
 				jobs[indexToUpdate].CompanyName = Updatedjob.CompanyName ?? jobs[indexToUpdate].CompanyName;
+				jobs[indexToUpdate].Type = Updatedjob.TypeOfWork ?? jobs[indexToUpdate].TypeOfWork;
+
 
 			}
 			else
