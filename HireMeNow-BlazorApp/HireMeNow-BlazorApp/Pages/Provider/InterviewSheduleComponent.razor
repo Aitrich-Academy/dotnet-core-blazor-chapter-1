@@ -19,15 +19,15 @@
 						<h3 class="h3-default text-right mr-5 ">Short List</h3>
 					</div>
 				</div>
-
+			<form @onsubmit="@sheduleinterview">
 				<div class="row">
 
 
 					<div class="col-md-10 mx-auto d-block border-top ">
-						<form>
+					
 							<div class="form-group text-dark">
 								<label><h4>Job Title</h4></label>
-								<input type="text" @bind="interview.Post" name="name" placeholder="Select Jobtitle" class="form-control bg-light p-4 border-0 rounded ">
+								<input type="text" @bind="interview.Post" name="name" placeholder="Select Jobtitle" class="form-control bg-light p-4 border-0 rounded " required>
 								<!-- <select class="form-select bg-light p-4 border-0 rounded" aria-label="Default select example">
 									<option selected>Select Jobtitle</option>
 									<option value="1">One</option>
@@ -48,19 +48,20 @@
 							<div class="form-group text-dark p-2">
 								<label><h4>Location</h4></label>
 								<img class="img-fluid float-right" src="JobProvider/InterviewShedule/images/location 1.png">
-								<input type="text" name="location" @bind="interview.Location" placeholder="Enter location" class="form-control bg-light p-4 border-0 rounded mb-5 w-75">
+								<input type="text" name="location" @bind="interview.Location" placeholder="Enter location" class="form-control bg-light p-4 border-0 rounded mb-5 w-75" required>
 							</div>
 							<div class="form-group d-inline ">
-								<button class="btn  text-white mr-5 bg-primary text-white" @onclick="@sheduleinterview">Send</button>
+								<input type="submit" class="btn  text-white mr-5 bg-primary text-white" @onsubmit="@sheduleinterview">Send</input>
 								<label><h5>Push Notification</h5></label>
 								<img class="img-fluid mr-5" src="JobProvider/InterviewShedule/images/Group 14.png">
 								<label><h5>Email Notifications</h5></label>
 								<img class="img-fluid" src="JobProvider/InterviewShedule/images/Group 14.png">
 							</div>
-						</form>
+						
 						<p>@msg</p>
 					</div>
 				</div>
+			</form>
 			</div>
 		</div>
 	</div>
@@ -87,7 +88,7 @@
 			if (result != null)
 			{
 				//NavManager.NavigateTo($"/SheduledinterviewList");
-				NavManager.NavigateTo("/");
+				NavManager.NavigateTo("/SheduledinterviewList");
 			}
 
 			}

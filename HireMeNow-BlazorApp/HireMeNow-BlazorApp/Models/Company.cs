@@ -13,6 +13,8 @@
 		public string? Mission { get; set; }
 		public string? Location { get; set; }
         public string? Address { get; set; }
+        public byte[]? ImageData { get; set; }
+
         public Company() { }
 
         public Company(string name, string email, string website, string phone, string? image, string? about, string? vision, string? mission, string? location,Guid? id=null)

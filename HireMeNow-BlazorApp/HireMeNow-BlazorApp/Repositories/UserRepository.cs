@@ -7,11 +7,11 @@ namespace HireMeNow_BlazorApp.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private List<User> users = new List<User> { new User( "jobprovider", "", "jobprovider@gmail.com", 123, "123", Roles.JobProvider,new Guid("ae32ba86-8e8d-4615-aa47-7387159e705d"),new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6")),
-         new User( "Yadhu", "", "yadhu.aitrich@gmail.com", 123, "123", Roles.JobSeeker,null,new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4")),
-         new User( "rs", "", "sad@gmail.com", 123, "123", Roles.CompanyMember,new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4")),
-            new User( "arun", "", "arun@gmail.com", 123, "123", Roles.Admin)};
-
+        private List<User> users = new List<User> { new User( "jobprovider", "", "jobprovider@gmail.com", 123, "123", Roles.JobProvider,new Guid("2c8303fb-c1e1-4fa6-a2e1-272472b4beb5"),new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6")),
+            new User( "Yadhu", "", "yadhu.aitrich@gmail.com", 9633508643, "123", Roles.JobSeeker,null,new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4")),
+         new User( "Soudha", "", "soudha.aitrich@gmail.com", 9878956521, "123", Roles.CompanyMember,new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4")),
+            new User( "admin", "", "admin@gmail.com", 0487321312, "123", Roles.Admin)};
+        User loggedUser;
         public User getById(Guid userId)
         {
            User user= users.Where(e=>e.Id==userId).FirstOrDefault();
@@ -20,7 +20,8 @@ namespace HireMeNow_BlazorApp.Repositories
 
         public User Login(string email, string password)
         {
-           return users.Where(e=>e.Email==email && e.Password==password).FirstOrDefault();
+            loggedUser = users.Where(e=>e.Email==email && e.Password==password).FirstOrDefault();
+            return loggedUser;
         }
 
         public User register(User user)
@@ -54,7 +55,7 @@ namespace HireMeNow_BlazorApp.Repositories
                 users[indexToUpdate].Location = updatedUser.Location??users[indexToUpdate].Location;
                 users[indexToUpdate].Gender = updatedUser.Gender??users[indexToUpdate].Gender;
                 users[indexToUpdate].Phone = updatedUser.Phone==null?users[indexToUpdate].Phone : updatedUser.Phone;
-
+                users[indexToUpdate].Image = updatedUser.Image??users[indexToUpdate].Image;
             }
             else
             {
@@ -98,7 +99,7 @@ namespace HireMeNow_BlazorApp.Repositories
 
         public User getuser()
 		{
-			return users.FirstOrDefault();
+			return loggedUser;
 		}
 	
 
@@ -115,7 +116,13 @@ namespace HireMeNow_BlazorApp.Repositories
                 users.Remove(user);
             }
         }
-    }
+
+		public void Logout()
+		{
+			//loggedUser=new User();
+            loggedUser=null;
+		}
+	}
 
     
 

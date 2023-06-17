@@ -1,5 +1,6 @@
 using HireMeNow_BlazorApp.Data;
 using HireMeNow_BlazorApp.Extensions;
+using HireMeNow_BlazorApp.Helpers;
 using HireMeNow_BlazorApp.Interfaces;
 using HireMeNow_BlazorApp.Repositories;
 using HireMeNow_BlazorApp.Services;
@@ -12,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<StorageService>();
+builder.Services.AddSingleton<FileUploadHelper>();
 builder.Services.AddApplicationServices(builder.Configuration);
 
 

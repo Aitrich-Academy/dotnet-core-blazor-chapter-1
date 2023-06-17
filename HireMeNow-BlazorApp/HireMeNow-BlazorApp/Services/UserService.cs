@@ -45,6 +45,14 @@ namespace HireMeNow_BlazorApp.Services
             return userRepository.jobProviderListing();
         }
 
+        public User getLoggedUser()
+        {
+            return userRepository.getuser();
+        }
 
-    }
+		public void Logout()
+		{
+            userRepository.Logout();
+		}
+	}
 }

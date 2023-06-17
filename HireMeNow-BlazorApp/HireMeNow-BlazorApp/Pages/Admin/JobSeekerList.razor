@@ -1,0 +1,42 @@
+﻿@page "/admin/jobseekers"
+@using HireMeNow_BlazorApp.Models;
+@using HireMeNow_BlazorApp.Interfaces
+@inject IUserService _userServices
+@layout AdminLayout
+<style>
+    .providerList{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: space-around;
+        align-items: center;
+        color: black;
+    }
+
+    .card {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+    }
+</style>
+<div class="container-fluid">
+    <h3>Job Seekers</h3>
+    <div class="row">
+        <div class="col-md-12 mt-3 providerList">
+           <JobProviderListComponent></JobProviderListComponent>
+        </div>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter]
+    public List<User> users { get; set; }
+
+    protected override void OnInitialized()
+    {
+        users = _userServices.jobseekerListing();
+        //users = _userServices.getAllUsers();
+    }
+}

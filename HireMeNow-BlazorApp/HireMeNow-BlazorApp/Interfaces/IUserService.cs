@@ -11,6 +11,7 @@ namespace HireMeNow_BlazorApp.Interfaces
         List<User> getAllUsers();
 		public List<User> jobseekerListing();
         public List<User> jobProviderListing();
-
+        User getLoggedUser();
+        void Logout();
     }
 }

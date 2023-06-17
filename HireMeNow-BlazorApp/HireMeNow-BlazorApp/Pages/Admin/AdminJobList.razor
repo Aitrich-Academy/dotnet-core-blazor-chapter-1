@@ -1,0 +1,64 @@
+﻿@page "/admin/jobs"
+@using HireMeNow_BlazorApp.Interfaces
+@using HireMeNow_BlazorApp.Models
+@using HireMeNow_BlazorApp.Services;
+@layout AdminLayout
+@inject IJobService Jobservices
+@inject StorageService storageService
+<link href="~/adminlogin/css/adminstyle.css" rel="stylesheet" />
+<PageTitle>jobs</PageTitle>
+<style>
+    .providerList{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: space-around;
+        align-items: center;
+        color: black;
+    }
+
+    .card {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+    }
+
+        .card:hover {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            box-shadow: 1px 1px 13px 0px #00000047;
+        }
+</style>
+
+
+<h3>Jobs</h3>
+@if (Joblist is null)
+{
+    <p><em>NO JOBS FOUND...</em></p>
+}
+else
+{
+    <div class="row bg-white">
+
+   
+  @foreach(var jobs in Joblist)
+    {
+       
+                    <AdminJobComponent job="@jobs"></AdminJobComponent>
+    }
+    </div>
+}
+
+
+@code {
+    List<Job> Joblist;
+
+    protected override void OnInitialized()
+    {
+        storageService.pageTitle = "Jobs";
+        Joblist = Jobservices.GetJobs();
+    }
+}

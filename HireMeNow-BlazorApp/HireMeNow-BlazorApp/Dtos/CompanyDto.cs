@@ -13,6 +13,7 @@
         public string? Mission { get; set; }
         public string? Location { get; set; }
         public string? Address { get; set; }
+        public string? Base64Image { get; set; }
 
         public CompanyDto()
         {

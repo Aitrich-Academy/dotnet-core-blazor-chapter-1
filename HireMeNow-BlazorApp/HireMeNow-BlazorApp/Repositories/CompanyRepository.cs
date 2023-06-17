@@ -44,8 +44,11 @@ namespace HireMeNow_BlazorApp.Repositories
                 companies[indexToUpdate].Mission = company.Mission??companies[indexToUpdate].Mission;
                 companies[indexToUpdate].Location = company.Location??companies[indexToUpdate].Location;
                 companies[indexToUpdate].Address = company.Address??companies[indexToUpdate].Address;
-                companies[indexToUpdate].Image = company.Address??companies[indexToUpdate].Address;
+                //companies[indexToUpdate].Image = company.Address??companies[indexToUpdate].Address;
                 companies[indexToUpdate].Phone = company.Phone==null ? companies[indexToUpdate].Phone : company.Phone;
+                companies[indexToUpdate].Image = company.Image??companies[indexToUpdate].Image;
+                companies[indexToUpdate].ImageData = company.ImageData??companies[indexToUpdate].ImageData;
+
 
             }
             else

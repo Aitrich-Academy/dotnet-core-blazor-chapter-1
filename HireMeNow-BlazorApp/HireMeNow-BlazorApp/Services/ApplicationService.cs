@@ -30,5 +30,10 @@ namespace HireMeNow_BlazorApp.Services
                 return _applicationRepository.GetAll(userId);
             
         }
+
+        public List<Application> GetAllByCompany(Guid companyId)
+        {
+            return _applicationRepository.GetAllByCompany(companyId);
+        }
     }
 }

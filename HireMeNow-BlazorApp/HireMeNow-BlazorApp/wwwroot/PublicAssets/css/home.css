@@ -177,7 +177,7 @@
 }
 
 .scroll {
-    height: 500px;
+    max-height: 600px;
     overflow: scroll;
 }
 
@@ -212,7 +212,7 @@
 }
 
 .job-specs {
-    width: 500px;
+    /*width: 500px;*/
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -232,6 +232,9 @@
 
 .right {
     box-shadow: -4px -2px 4px 1px #0000001c;
+    background-image: url('../../JobProvider/images/professional1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
     .right:hover {
@@ -265,4 +268,10 @@
 }
 .hiremeFooter {
     max-width: 300px;
+}
+
+@media (max-width: 700px) {
+    .right {
+       display:none;
+    }
 }

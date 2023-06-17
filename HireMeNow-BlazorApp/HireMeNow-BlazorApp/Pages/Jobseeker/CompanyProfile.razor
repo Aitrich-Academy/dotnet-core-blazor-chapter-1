@@ -1,0 +1,420 @@
+﻿@page "/company/profile"
+
+@using AutoMapper;
+@using HireMeNow_BlazorApp.Dtos;
+@using HireMeNow_BlazorApp.Helpers;
+@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+@layout JobSeekerLayout
+@inject IUserService _userService
+@inject NavigationManager NavManager
+@using HireMeNow_BlazorApp.Models;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+@inject IMapper _mapper;
+@inject ICompanyService _companyService
+@inject FileUploadHelper helper
+@inject IWebHostEnvironment _webHostEnvironment
+
+<style>
+    .personal-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .proImg {
+       height:150px;
+       width:150px;
+       border-radius:50%;
+    }
+
+    .aboutMeDiv {
+        width: 100%;
+        /*  min-width: 420px;*/
+        /* padding: 35px;*/
+    }
+
+    .btnSaveChanges {
+        display: none;
+    }
+
+    .aboutMeTxtDiv {
+        min-width: 350px;
+        padding: 5px;
+        min-height: 150px;
+        display: none;
+        /*width: 401px;*/
+    }
+
+    .skillsDiv {
+        /*min-width: 350px;*/
+        min-height: 100px;
+    }
+
+    .skill {
+        display: none;
+    }
+
+    .experienceDiv {
+        /*min-width: 350px;*/
+        min-height: 100px;
+    }
+
+    .experience-form {
+        display: none;
+    }
+
+    .educationDiv {
+        /*min-width: 350px;*/
+        min-height: 100px;
+    }
+
+    .education-form {
+        display: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .aboutMeContentDiv {
+        width: 100%;
+    }
+
+    .content-div {
+        width: 100%;
+    }
+
+    .wrapper-div {
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .previewImg{
+        width:150px;
+        
+    }
+
+</style>
+@if (IsCompanyExist){
+<form method="post" id="profileForm">
+    <div id="content " class=" p-md-5 wrapper-div">
+        <div class="row content-div">
+            <div class="col-md-6 personal-details">
+                @if (!IsInfoEditable)
+                {
+                    <div>
+                        <img src="jobseekerassets/images/edit-2.png" width="15px" align="right" @onclick="ToggleIsInfoEditable" />
+                        <div class="firstDiv">
+                            @if (imagePreviewUrl!=null)
+                            {
+                                <img src="@imagePreviewUrl" alt="Preview" class="proImg " />
+                            }
+                            else if (string.IsNullOrEmpty(Model?.Base64Image))
+                            {
+                                <img src="publicassets/images/gray-user.png" width="100px" alt="" class="proImg" />
+                            } 
+                            else
+                            {
+                                <img src="data:image/jpeg;base64,@Model.Base64Image" width="100px" alt="" class="proImg">
+                            }
+
+                            <font size="4" face="verdana" color="black" align="center">
+
+                                <center>  <b> @Model?.Name </b></center>
+
+                            </font>
+                            @* <em>@Model.Designation</em>*@ <br>
+                        </div>
+
+
+                        @* <h3><img src="jobseekerassets/images/resume.png" width="25px" alt="Resume "> RESUME </h3>*@
+                        <font size="4" face="math" color="black" align="center">
+                            <i>
+                                <img src="jobseekerassets/images/mail.png" width="20px" alt="mail ">
+                                @Model?.Website
+                            </i>
+                            <br>
+                            <i>
+                                <img src="jobseekerassets/images/mail.png" width="20px" alt="mail ">
+                                @Model?.Email
+                            </i>
+                            <br>
+
+                            <i>
+                                <img src="jobseekerassets/images/phone.png" width="20px" alt="phone ">
+                                @Model?.Phone
+                            </i><br>
+                            <i>
+                                <img src="jobseekerassets/images/location.png" width="20px" alt="location ">  @Model?.Location
+                            </i><br>
+
+                        </font>
+                    </div>
+                }else{
+               
+                <div class="companyInfoDiv">
+                        <InputFile OnChange="HandleFileChange" class="form-control " placeholder="Logo"/><br>
+                        <img src="@imagePreviewUrl" alt="Preview" class="previewImg " /><br>
+                        <input type="text" @bind="Model.Name" class="form-control " placeholder="Company Name" required /><br>
+                        <input type="text" @bind="Model.Email" class="form-control " placeholder="Email" required /><br>
+                        <input type="text" @bind="Model.Phone" class="form-control " placeholder="Phone" /><br>
+                        <input type="text" @bind="Model.Website" class="form-control " placeholder="Website" required /><br>
+                        <input type="text" @bind="Model.Location" class="form-control " placeholder="Location" required /><br>
+
+                    <input type="button" class="btn btn-sm btn-primary" value="Preview" @onclick="ToggleIsInfoEditable" />
+                </div>
+                }
+                <div class="aboutMeDiv">
+                    <img src="jobseekerassets/images/edit-2.png" width="15px" align="right" @onclick="ToggleIsAboutAdd" />
+                    <h4> <img src="jobseekerassets/images/user.png" width="25px"> About Company </h4>
+
+                    <font size="3" face="math" color="black" align="justify-content-center">
+
+
+                        <blockquote>
+
+                            @if (!IsAboutAdd)
+                            {
+                                <textarea rows="5" id="aboutMeContentTextarea" class="aboutMeContentDiv" placeholder="About Company" @bind="Model.About " readonly>  </textarea>
+                            }else{
+                                <textarea rows="5" id="aboutMeContentTextarea" class="aboutMeContentDiv" placeholder="About Company" @bind="Model.About " @ref="aboutTextarea">   </textarea>
+
+                            }
+                            @* <div class="aboutMeContentDiv" id="aboutMeContentDiv">
+                            @Model?.About
+                            </div>*@
+                        </blockquote>
+                    </font>
+
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="skillsDiv">
+                    <img src="jobseekerassets/images/edit-2.png" width="15px" align="right" @onclick=ToggleIsVisionEditable />
+                    <h4 align="left"><img src="jobseekerassets/images/bulb.png" width="25px"> Vision</h4>
+                    <blockquote>
+                        @if (!IsVisionEditable)
+                        {
+                            <textarea rows="5" id="visionTextarea" class="aboutMeContentDiv" placeholder="Vision" @bind=Model.Vision readonly >  </textarea>
+                        }
+                        else{
+                            <textarea rows="5" id="visionTextarea" class="aboutMeContentDiv" placeholder="Vision" @bind=Model.Vision  @ref=visionTextarea>  </textarea>
+                        }
+
+                    </blockquote>
+                </div>
+
+                <div class="educationDiv">
+                    <img src="jobseekerassets/images/edit-2.png" width="15px" align="right" @onclick=ToggleIsMissionEditable />
+
+                    <h4 align="left">
+                        <img src="jobseekerassets/images/graduation.png" width="25px"> Mission
+                    </h4>
+                    <blockquote>
+                        @if (!IsMissionEditable)
+                        {
+                            <textarea rows="5" id="missionTextarea" class="aboutMeContentDiv" placeholder="Mission" @bind=Model.Mission readonly >  </textarea>
+                        }
+                        else
+                        {
+                            <textarea rows="5" id="missionTextarea" class="aboutMeContentDiv" placeholder="Mission" @bind=Model.Mission @ref=missionTextarea>  </textarea>
+                        }
+
+                    </blockquote>
+                </div>
+                <div class="experienceDiv">
+                    <img src="jobseekerassets/images/edit-2.png" width="15px" align="right" @onclick=ToggleIsContactEditable />
+                    <h4 align="left"> <img src="jobseekerassets/images/job.png" width="25px"> Contact Details</h4>
+                    <blockquote>
+                        @if (!IsContactEditable)
+                        {
+                            <textarea rows="5" id="contactTextarea" class="aboutMeContentDiv" placeholder=" Contact Details" @bind=Model.Address readonly> </textarea>
+
+                        }
+                        else
+                        {
+                            <textarea rows="5" id="contactTextarea" class="aboutMeContentDiv" placeholder=" Contact Details" @bind=Model.Address @ref=contactTextarea> </textarea>
+                        }
+                    </blockquote>
+                </div>
+
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-primary" @onclick="UpdateCompany" style="width: 250px;">Update</button>
+        <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
+    </div>
+    </form>
+}
+else
+{
+    <h1>No Company Found</h1>
+    <p>You Can Add Company Here</p>
+    <NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="company/register">
+    <img src="PublicAssets/images/Plus.png" alt=" add company " class="profImg" >
+    </NavLink>
+   // <AddCompanyComponent user="@CurrentUser"></AddCompanyComponent>
+}
+@code {
+    [Parameter]
+    public CompanyDto Model { get; set; } = new();
+
+    public  User CurrentUser{get;set;}=new();
+    [Parameter]
+    public bool IsCompanyExist { get; set; } = false;
+
+    [Parameter]
+    public bool IsInfoEditable { get; set; } = false;
+
+    [Parameter]
+    public bool IsAboutAdd { get; set; } = false;
+    private ElementReference aboutTextarea;
+    [Parameter]
+    public bool IsVisionEditable { get; set; } = false;
+    private ElementReference visionTextarea;
+
+    [Parameter]
+    public bool IsMissionEditable { get; set; } = false;
+    private ElementReference missionTextarea;
+
+    [Parameter]
+    public bool IsContactEditable { get; set; } = false;
+    private ElementReference contactTextarea;
+
+    public async void ToggleIsContactEditable()
+    {
+        IsContactEditable = !IsContactEditable;
+        if (IsContactEditable)
+        {
+            await Task.Delay(100); // Delay for 100 milliseconds
+            await contactTextarea.FocusAsync();
+        }
+
+    }
+
+    public async void ToggleIsMissionEditable()
+    {
+        IsMissionEditable = !IsMissionEditable;
+        if (IsMissionEditable)
+        {
+            await Task.Delay(100); // Delay for 100 milliseconds
+            await missionTextarea.FocusAsync();
+        }
+
+    }
+
+    public async void ToggleIsVisionEditable()
+    {
+        IsVisionEditable = !IsVisionEditable;
+        if (IsVisionEditable)
+        {
+            await Task.Delay(100); // Delay for 100 milliseconds
+            await visionTextarea.FocusAsync();
+        }
+
+    }
+
+    public void ToggleIsAboutAdd()
+    {
+        IsAboutAdd = !IsAboutAdd;
+        if (IsAboutAdd)
+            FocusOnTextarea();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await ProtectedSessionStore.GetAsync<Guid>("userId");
+         CurrentUser = result.Success ? _userService.getById(result.Value) : new();
+        Company company = new Company();
+        if (CurrentUser != null)
+        {
+            if (CurrentUser.companyId != null)
+            {
+                company = _companyService.getCompanyById(CurrentUser.companyId.Value);
+                if (company!=null)
+                {
+                    Model = _mapper.Map<CompanyDto>( company);
+                    IsCompanyExist = true;
+                }
+                else
+                {
+                    IsCompanyExist = false;
+                }
+
+            }
+        }
+    }
+
+    public void ToggleIsInfoEditable()
+    {
+        IsInfoEditable = !IsInfoEditable;
+    }
+
+    private async Task FocusOnTextarea()
+    {
+        await Task.Delay(100); // Delay for 100 milliseconds
+        await aboutTextarea.FocusAsync();
+    }
+
+    public async void UpdateCompany()
+    {
+        if (Model!=null)
+        {
+          
+            _companyService.Update(_mapper.Map<Company>(Model));
+        }
+    }
+
+    private string imagePreviewUrl;
+    private IBrowserFile logo;
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        logo = e.File;
+
+        if (logo != null)
+        {
+
+            imagePreviewUrl = await CreateObjectUrl(logo);
+        }
+        else
+        {
+            imagePreviewUrl = null;
+        }
+    }
+
+    private async Task<string> CreateObjectUrl(IBrowserFile file)
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            memoryStream.Position = 0;
+            await file.OpenReadStream().CopyToAsync(memoryStream);
+            var buffer = memoryStream.ToArray();
+
+            var base64 = Convert.ToBase64String(buffer);
+            Model.Base64Image = base64;
+            var mimeType = file.ContentType;
+
+            return $"data:{mimeType};base64,{base64}";
+        }
+        //var buffer = new byte[file.Size];
+        //await file.OpenReadStream().ReadAsync(buffer);
+        
+        //var base64 = Convert.ToBase64String(buffer);
+        //Model.Base64Image = base64;
+        //var mimeType = file.ContentType;
+
+        //return $"data:{mimeType};base64,{base64}";
+    }
+
+}

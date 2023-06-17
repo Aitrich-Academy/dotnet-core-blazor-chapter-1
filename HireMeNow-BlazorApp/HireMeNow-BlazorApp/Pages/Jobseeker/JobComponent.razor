@@ -1,12 +1,18 @@
-﻿@page "/Jobseeker/JobComponent"
+﻿@page "/Jobseeker/Jobs"
 @using HireMeNow_BlazorApp.Interfaces
 @using HireMeNow_BlazorApp.Models
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 @layout JobSeekerLayout
 @inject IJobService Jobservices
+@inject IApplicationService applicationService
+@inject ProtectedSessionStorage ProtectedSessionStore
+@inject NavigationManager NavigationManager
+@inject IUserService userService
+
 
 <div>
 	<div class="row fullscreen-div">
-        <div class="col-md-12 bg-light text-secondary small p-4 jobs-list">
+        <div class="col-md-7 bg-light text-secondary small p-4 jobs-list">
             <div class="row">
                 <div class="col-md-6 ">
                     <span class="text-dark font-weight-bold">Showing @Joblist.Count() Jobs</span>
@@ -19,10 +25,11 @@
             <div class="row">
                 @foreach (var jobs in Joblist)
                 {
-                    <ListJobComponent job="@jobs"></ListJobComponent>
+                    <ListJobComponent job="@jobs" OnJobSelected="SelectJob"></ListJobComponent>
                 }
             </div>
-        </div>@*<div class="col-md-5 bg-white right" align="center">
+        </div>
+        <div class="col-md-5 bg-white " align="center">
             <div class="header">
                 <div class="proImg">
                     @if (selectedJob?.Company?.Image != null)
@@ -90,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <form>
+                   
                         <input type="hidden" name="jobId" value="@selectedJob.Id" />
                         <button class="btn btn-primary" style="width: 40%;" @onclick="ShowConfirmation">
                             Apply Job
@@ -98,7 +105,7 @@
                         <button class="btn" style="width: 40%;background-color: #ECECEC;">
                             Send Message
                         </button>
-                    </form>
+                    
                 </div>
             }
         </div>
@@ -113,13 +120,21 @@
                     </div>
                 </div>
             </div>
-        }*@
+        }
   </div></div>      
 @code {
     List<Job> Joblist;
     protected override void OnInitialized()
     {
-        Joblist = Jobservices.GetJobs();
+        var loggedUser = userService.getLoggedUser();
+        if (loggedUser == null)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            Joblist = Jobservices.GetJobs();
+        }
     }
     Job selectedJob;
     bool showConfirmationOverlay = false;
@@ -142,16 +157,19 @@
         showConfirmationOverlay = false;
     }
 
-    private void SubmitForm()
+    private async void SubmitForm()
     {
        
         // Add your form submission logic here
         // For example:
-        // jobService.ApplyJob(selectedJob);
-
+        var result = await ProtectedSessionStore.GetAsync<Guid>("userId");
+        //var CurrentUser = result.Success ? _userService.getById(result.Value) : new();
+        applicationService.AddApplication(selectedJob.Id, result.Value);
+        NavigationManager.NavigateTo("/Jobseeker/MyApplication");
         // Reset the selected job
-        selectedJob = null;
+      //  selectedJob = null;
     }
+
 }
 
 

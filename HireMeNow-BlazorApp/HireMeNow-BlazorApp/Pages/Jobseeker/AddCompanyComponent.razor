@@ -1,0 +1,93 @@
+﻿@page "/company/register"
+@layout JobSeekerLayout
+
+@using AutoMapper;
+@using HireMeNow_BlazorApp.Dtos;
+@inject IUserService _userService
+@inject NavigationManager NavManager
+@using HireMeNow_BlazorApp.Interfaces;
+@using HireMeNow_BlazorApp.Models;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+@inject IMapper _mapper;
+@inject ICompanyService _companyService
+
+<style>
+    .previewImg {
+        width: 150px;
+    }
+
+    .CompanyAddDiv{
+        background-color:white;
+
+    }
+
+</style>
+
+
+<div class="CompanyAddDiv col-md-10 p-5">
+    <h3>Add Company</h3>
+    <EditForm Model="@Model" OnValidSubmit="AddCompany">
+    <InputFile OnChange="HandleFileChange" class="form-control " placeholder="Logo" /><br>
+    <img src="@imagePreviewUrl" alt="Preview" class="previewImg " /><br>
+    <input type="text" @bind="Model.Name" class="form-control " placeholder="Company Name" required /><br>
+    <input type="email" @bind="Model.Email" class="form-control " placeholder="Email" required /><br>
+        <input type="number" @bind="Model.Phone" class="form-control " placeholder="Phone" pattern="^\d{10}$" required /><br>
+    <input type="url" @bind="Model.Website" class="form-control " placeholder="Website" required /><br>
+    <input type="text" @bind="Model.Location" class="form-control " placeholder="Location" required /><br>
+   
+
+    <input type="submit" class="btn btn-sm btn-primary" value="Register Company" />
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public CompanyDto Model { get; set; } = new();
+    [Parameter]
+    public User user { get; set; } = new();
+    private string imagePreviewUrl;
+    private IBrowserFile logo;
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        logo = e.File;
+
+        if (logo != null)
+        {
+
+            imagePreviewUrl = await CreateObjectUrl(logo);
+        }
+        else
+        {
+            imagePreviewUrl = null;
+        }
+    }
+
+    private async Task<string> CreateObjectUrl(IBrowserFile file)
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            memoryStream.Position = 0;
+            await file.OpenReadStream().CopyToAsync(memoryStream);
+            var buffer = memoryStream.ToArray();
+
+            var base64 = Convert.ToBase64String(buffer);
+            Model.Base64Image = base64;
+            var mimeType = file.ContentType;
+
+            return $"data:{mimeType};base64,{base64}";
+        }
+
+    }
+
+    public async void AddCompany()
+    {
+        var result = await ProtectedSessionStore.GetAsync<Guid>("userId");
+        user = result.Success ? _userService.getById(result.Value) : new();
+        var company= _companyService.Register(_mapper.Map<Company>(Model));
+        user.companyId = company.Id;
+        _userService.Update(user);
+        NavManager.NavigateTo("/company/profile");
+    }
+}

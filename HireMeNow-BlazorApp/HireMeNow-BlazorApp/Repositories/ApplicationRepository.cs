@@ -13,7 +13,12 @@ namespace HireMeNow_BlazorApp.Repositories
 		}
 		public void AddApplication(User user, Job job)
 		{
-			_applications.Add(new Application(job, user, "Pending"));
+			_applications.Add(new Application(job, user, "Pending", job.CompanyId));
 		}
-	}
+
+        public List<Application> GetAllByCompany(Guid companyId)
+        {
+            return _applications.Where(e => e.CompanyId== companyId).ToList();
+        }
+    }
 }

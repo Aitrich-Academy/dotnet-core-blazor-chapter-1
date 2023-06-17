@@ -105,7 +105,7 @@
 
                             </div>
                             <br>
-            <div class="col-md-5">
+            <div class="col-md-8">
 
                                 <div class="row tags">
                                     <div class="fulltime"> FullTime </div>
@@ -145,10 +145,19 @@
     [Parameter]
     public Job job{ get; set; }
 
-    public void ApplyJob()
+    public async void ApplyJob()
     {
-        var userId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
-        applicatioService.AddApplication(job.Id, userId);
-        NavigationManager.NavigateTo("/Jobseeker/MyApplication");
+        var result = await protectedSessionStore.GetAsync<Guid>("userId");
+        if (result.Value!=new Guid())
+        {
+            applicatioService.AddApplication(job.Id, result.Value);
+            NavigationManager.NavigateTo("/Jobseeker/MyApplication");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/Login");
+        }
+
+
     }
 }

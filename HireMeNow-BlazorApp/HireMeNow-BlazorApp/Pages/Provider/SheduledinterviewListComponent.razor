@@ -1,9 +1,15 @@
 ﻿@page "/SheduledinterviewList"
-@layout InterviewLayoutComponent
+@layout JobProviderLayoutComponent
 @using HireMeNow_BlazorApp.Interfaces;
 @inject IInterviewServices _interviewServices
 @using HireMeNow_BlazorApp.Models;
 @using HireMeNow_BlazorApp.Dtos;
+<style>
+	.leftDiv{
+		max-height: 600px;
+		overflow: scroll;
+	}
+</style>
 <div class="container-fluid">
 	
 		<div class=" col-md-12 bg-light">
@@ -14,17 +20,19 @@
 						<input  type="search" class="form-control rounded-pill " placeholder="Search by Job Title, Interview Date " aria-label="Search" aria-describedby="search-addon">
 					<img class="flex" src="JobProvider/SheduledInterviewList/images/icon filter.png">
 					</div>
+					<br />
+				<a href="interviewShedule"><b>Shedule Interview</b></a>
 					</div>
-					<div class="col-md-2 bg-white">
+				@*	<div class="col-md-2 bg-white">
 					<img class="img-fluid " src="JobProvider/SheduledInterviewList/images/Group 5689.png">
 					<img class="img-fluid" src="JobProvider/SheduledInterviewList/images/Group 33999.png">
-				</div>
+				</div>*@
 				</div>
 				<div class="col-md-12 bg-light" >
 			<div class="row">
 				<div class="col-md-10 bg-white border rounded mx-auto mt-5 mb-5 p-2">
 					<div class="row">
-						<div class="col-md-6 p-5">
+						<div class="col-md-6 p-5 scroll">
 						<InterviewListComponent></InterviewListComponent>
 					
 						</div>

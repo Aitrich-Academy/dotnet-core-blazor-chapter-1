@@ -14,10 +14,10 @@
 				<div class="col-md " style="background-color: #f5f5fa;">
 					<div class="row pt-5">
 						<div class="col-md-6 text-right ">
-							<a class="text-dark " href="#"><h4>Remove Member</h4></a>
+				<a class="text-dark " href="removeMember"><h4>Remove Member</h4></a>
 						</div>
 						<div class="col-md-6 text-left">
-							<a class="text-dark" href="#"><h4>List Of Members</h4></a>
+				<a class="text-dark" href="memberListing"><h4>List Of Members</h4></a>
 						</div>
 					</div>
 					<div class="row">
@@ -28,16 +28,17 @@
 									<h3 class="h1 fluid text-center p-2">Registration Of New Member</h3>
 								</div>
 							</div>
-							<form asp-action="PostJob">
+				<form @onsubmit="@Add">
+								
 									<div class="row mt-3 ">
 										<div class="col-md-5 ml-5 ">
 											<div class="form-group">
 												<label><strong>First Name</strong></label><br>
-								<input class="form-control border-dark" @bind="user.FirstName" type="text" name="fname" placeholder="Please enter first name"><br>
+								<input class="form-control border-dark" @bind="user.FirstName" type="text" name="fname" placeholder="Please enter first name" required><br>
 											</div>
 											<div class="form-group">
 												<label><strong>Email</strong></label><br>
-								<input class="form-control border-dark" @bind="user.Email" type="text" name="email" placeholder="Enter Email"><br>
+								<input class="form-control border-dark" @bind="user.Email" type="text" name="email" placeholder="Enter Email" required><br>
 											</div>
 											<div class="form-group">
 												<label><strong>Deignation</strong></label><br>
@@ -70,7 +71,7 @@
 									</div>
 									<div class="row">
 										<div class="col-md-10 mx-auto d-block">
-											<button class="btn  bg-success mx-auto d-block" @onclick="@Add">REGISTER</button>
+											<input type="submit" class="btn  bg-success mx-auto d-block" @onsubmit="@Add">REGISTER</input>
 										</div>
 									</div>
 							</form>
@@ -104,7 +105,7 @@
 		var result = _companyService.memberRegister(userModel);
 		if (result != null)
 		{
-			NavManager.NavigateTo("/memberLIsting");
+			NavManager.NavigateTo("/memberListing");
 
 		}
 	}

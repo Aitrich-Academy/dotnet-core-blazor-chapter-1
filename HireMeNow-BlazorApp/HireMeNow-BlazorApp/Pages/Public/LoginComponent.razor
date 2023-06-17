@@ -5,6 +5,7 @@
 @inject NavigationManager NavManager
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedSessionStorage ProtectedSessionStore
+<link href="publicassets/css/loginstyle.css" rel="stylesheet" />
 
 <div class="container containerDiv">
 
@@ -81,7 +82,11 @@
         if (result!=null)
         {
             await ProtectedSessionStore.SetAsync("userId", result.Id);
-            NavManager.NavigateTo("/profile");
+            if (result.Role==Enums.Roles.JobSeeker)
+                NavManager.NavigateTo("/user/profile");
+            else if (result.Role==Enums.Roles.JobProvider)
+                NavManager.NavigateTo("/JobProvider/profile");
+
         }
         else
         {
