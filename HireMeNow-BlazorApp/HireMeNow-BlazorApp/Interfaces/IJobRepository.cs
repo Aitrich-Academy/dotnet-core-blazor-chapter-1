@@ -13,5 +13,6 @@ namespace HireMeNow_BlazorApp.Interfaces
 
 		void DeleteById(Guid id);
 		List<Job> getByTitle(string title);
-	}
+        List<Job> GetJobsByCompany(Guid cmpId);
+    }
 }

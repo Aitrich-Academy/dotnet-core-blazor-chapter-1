@@ -29,7 +29,7 @@ namespace HireMeNow_BlazorApp.Services
 
 		public void memberDeleteById(Guid id)
         {
-            _UserRepository.memberDeleteById(id);
+            _UserRepository.RemoveById(id);
         }
 
 

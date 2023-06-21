@@ -39,9 +39,12 @@ namespace HireMeNow_BlazorApp.Services
            return _jobRepository.GetJobs();
         }
 
-		
+        public List<Job> GetJobsByCompany(Guid cmpId)
+        {
+            return _jobRepository.GetJobsByCompany(cmpId);
+        }
 
-		public Job PostJob(Job job)
+        public Job PostJob(Job job)
         {
 			return _jobRepository.PostJob(job);
         }

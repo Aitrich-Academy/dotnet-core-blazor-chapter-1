@@ -5,9 +5,17 @@
 @using HireMeNow_BlazorApp.Models;
 @using HireMeNow_BlazorApp.Dtos;
 <style>
-	.leftDiv{
+	.scroll {
 		max-height: 600px;
 		overflow: scroll;
+	}
+
+		.scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+	.InterviewCard:hover{
+		box-shadow: 0px 1px 9px 0px #69696987;
 	}
 </style>
 <div class="container-fluid">

@@ -33,8 +33,9 @@ namespace HireMeNow_BlazorApp.Dtos
         public Guid? companyId { get; set; }
 
         public string? Image { get; set; }
+		public string? UserId { get; set; }
 
-        public UserDto()
+		public UserDto()
         {
             
         }

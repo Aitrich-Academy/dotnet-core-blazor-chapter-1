@@ -17,5 +17,8 @@ namespace HireMeNow_BlazorApp.Models
 		public string? Image { get; set; }
 
 
-	}
+        public Company? company { get; set; }
+
+
+    }
 }

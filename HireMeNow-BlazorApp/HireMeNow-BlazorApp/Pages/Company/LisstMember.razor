@@ -3,6 +3,7 @@
 @using HireMeNow_BlazorApp.Interfaces;
 @using HireMeNow_BlazorApp.Models;
 @inject NavigationManager navmanager
+@inject IUserService userService
 <style>
 	.memberBox{
 		box-shadow: 2px 7px 9px 0px #262323e3;
@@ -19,13 +20,24 @@
 				@foreach (var user in userList)
 				{
 					<div class="col-md-4 mr-5 bg-white p-4 memberBox">
-						<img class="img-fluid" src="publicassets/images/gray-user.png" width="150px">
+						@if (user.Image==null)
+						{
+							<img src="publicassets/images/gray-user.png" alt="" class="img-fluid " width="150px" />
+						}
+						else
+						{
+
+							<img src="Uploads/@user.Image" alt="" class="img-fluid " width="150px">
+						}
 						<br>
 						<strong></strong><br>
-						<h5>@user.FirstName<br>
+						<h5>@user.FirstName<br></h5>
+						<em>UserId : @user.UserId</em>
+						<h5>
 							@user.Designation<br>
 							@user.Phone<br>
-							@user.Email</h5>
+							@user.Email
+						</h5>
 						<button class="btn bg-primary rounded-pill mx-auto d-block" @onclick="@(() => View(user.Id))">View</button>
 						@*<NavLink class="nav-link d-flex align-items-center text-white text-decoration-none" href="RemoveMember/@user.id">*@
 						<button class="btn btn-outline-danger rounded-pill mx-auto d-block" @onclick="@(() => removeMember(user.Id))" >Remove</button>
@@ -59,7 +71,11 @@
 
 	protected override void OnInitialized()
 	{
-		Guid cmpId = new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4");
-		userList = _companyService.memberListing(cmpId);
+		//Guid cmpId = new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4");
+		var loggedUser = userService.getLoggedUser();
+		if (loggedUser.company != null)
+		{
+			userList = _companyService.memberListing(loggedUser.company.Id);
+		}
 	}
 }

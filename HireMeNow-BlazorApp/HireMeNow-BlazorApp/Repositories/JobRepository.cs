@@ -26,13 +26,12 @@ namespace HireMeNow_BlazorApp.Repositories
 
 		public List<Job> getByTitle(string title)
 		{
-			
-			return jobs.Where(j => j.Title.ToLower().Contains( title.ToLower())).ToList();
 
+            return jobs.Where(j => j.Title.ToLower().Contains(title.ToLower()) ||j.CompanyName.Contains(title, StringComparison.OrdinalIgnoreCase)).ToList();
 
-		}
+        }
 
-		public Job GetJobById(Guid selectedJobId)
+        public Job GetJobById(Guid selectedJobId)
 		{
 			return jobs.Where(e=>e.Id==selectedJobId).FirstOrDefault();
 		}
@@ -42,7 +41,13 @@ namespace HireMeNow_BlazorApp.Repositories
             return jobs;
         }
 
-		public List<Job> GetJobsByIds(List<Guid> appliedJobsIds)
+        public List<Job> GetJobsByCompany(Guid cmpId)
+        {
+            return jobs.Where(j => j.CompanyId==cmpId).ToList();
+
+        }
+
+        public List<Job> GetJobsByIds(List<Guid> appliedJobsIds)
 		{
 			List<Job> Appliedjobs = new List<Job>();
 			appliedJobsIds.ForEach(e=> Appliedjobs.Add(GetJobById(e)));
