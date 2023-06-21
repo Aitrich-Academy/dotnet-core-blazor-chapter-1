@@ -3,6 +3,7 @@
 @using HireMeNow_BlazorApp.Interfaces;
 @using HireMeNow_BlazorApp.Models;
 @inject ICompanyService _companyService
+@inject IUserService userService
 @inject NavigationManager NavManager
 @inject IMapper _mapper
 					
@@ -100,13 +101,17 @@
 	protected void Add()
 	{
 		var userModel = _mapper.Map<User>(user);
-		Guid cmpId = new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4");
-		userModel.companyId = cmpId;
-		var result = _companyService.memberRegister(userModel);
-		if (result != null)
+		var loggedUser = userService.getLoggedUser();
+		//Guid cmpId = new Guid("1d8303fb-c1e1-4fa6-a2e1-272472b2beb4");
+		if (loggedUser.company != null)
 		{
-			NavManager.NavigateTo("/memberListing");
+			userModel.companyId = loggedUser.company.Id;
+			var result = _companyService.memberRegister(userModel);
+			if (result != null)
+			{
+				NavManager.NavigateTo("/memberListing");
 
+			}
 		}
 	}
 	

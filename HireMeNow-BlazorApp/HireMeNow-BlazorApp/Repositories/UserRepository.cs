@@ -108,7 +108,7 @@ namespace HireMeNow_BlazorApp.Repositories
             return users;
 		}
 
-        public void memberDeleteById(Guid id)
+        public void RemoveById(Guid id)
         {
             User user = users.Find(e => e.Id==id);
             if (user!=null)
@@ -122,7 +122,12 @@ namespace HireMeNow_BlazorApp.Repositories
 			//loggedUser=new User();
             loggedUser=null;
 		}
-	}
+        public List<User> GetByFilter(string search, Roles role)
+        {
+            var memberList = users.Where(e => (e.Role == role) && e.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            return memberList;
+        }
+    }
 
     
 

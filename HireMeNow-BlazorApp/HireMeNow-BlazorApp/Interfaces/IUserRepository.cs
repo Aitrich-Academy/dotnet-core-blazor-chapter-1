@@ -1,4 +1,5 @@
-﻿using HireMeNow_BlazorApp.Models;
+﻿using HireMeNow_BlazorApp.Enums;
+using HireMeNow_BlazorApp.Models;
 using HireMeNow_BlazorApp.Pages.Company;
 
 namespace HireMeNow_BlazorApp.Interfaces
@@ -15,7 +16,8 @@ namespace HireMeNow_BlazorApp.Interfaces
 		List<User> jobseekerListing();
 		List<User> getAllUsers();
         List<User> jobProviderListing();
-        void memberDeleteById(Guid id);
+        void RemoveById(Guid id);
 		void Logout();
-	}
+        List<User> GetByFilter(string search, Roles role);
+    }
 }

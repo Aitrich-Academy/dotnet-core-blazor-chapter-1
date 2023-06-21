@@ -25,7 +25,8 @@ namespace HireMeNow_BlazorApp.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
         public Roles Role { get; set; }
-        public User() { }
+		public string? UserId { get; set; }
+		public User() { }
         public User( string firstname, string lastname, string email, long phone, string password, Roles roles,Guid? companyid=null, Guid? id = null)
         {
             Id = id?? Guid.NewGuid();

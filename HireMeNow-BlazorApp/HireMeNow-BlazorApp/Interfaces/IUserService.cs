@@ -1,4 +1,5 @@
-﻿using HireMeNow_BlazorApp.Models;
+﻿using HireMeNow_BlazorApp.Enums;
+using HireMeNow_BlazorApp.Models;
 
 namespace HireMeNow_BlazorApp.Interfaces
 {
@@ -12,6 +13,8 @@ namespace HireMeNow_BlazorApp.Interfaces
 		public List<User> jobseekerListing();
         public List<User> jobProviderListing();
         User getLoggedUser();
+        void Remove(Guid userId);
         void Logout();
+        public List<User> GetByFilter(string search, Roles role);
     }
 }

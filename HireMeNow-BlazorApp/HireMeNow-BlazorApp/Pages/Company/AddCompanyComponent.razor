@@ -1,5 +1,5 @@
 ﻿@page "/company/register"
-@layout JobSeekerLayout
+@layout JobProviderLayoutComponent
 
 @using AutoMapper;
 @using HireMeNow_BlazorApp.Dtos;
@@ -87,6 +87,7 @@
         user = result.Success ? _userService.getById(result.Value) : new();
         var company= _companyService.Register(_mapper.Map<Company>(Model));
         user.companyId = company.Id;
+        user.company = company;
         _userService.Update(user);
         NavManager.NavigateTo("/company/profile");
     }

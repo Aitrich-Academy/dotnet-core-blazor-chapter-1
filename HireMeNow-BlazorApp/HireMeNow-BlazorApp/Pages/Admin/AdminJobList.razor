@@ -8,7 +8,7 @@
 <link href="~/adminlogin/css/adminstyle.css" rel="stylesheet" />
 <PageTitle>jobs</PageTitle>
 <style>
-    .providerList{
+    .providerList {
         display: flex;
         flex-wrap: wrap;
         align-content: center;
@@ -35,6 +35,16 @@
 
 
 <h3>Jobs</h3>
+<div class="col-md-6 m-4">
+    <div class="input-group rounded-pill  bg-light">
+        <button type="button" class="btn " @onclick="GetJobs">
+            <i class="bi bi-search"></i>
+        </button>
+        <div class="form-outline bg-light col-md-10">
+            <input type="search" @bind=Search id="form1" class="form-control bg-light border-0" placeholder="Search by Title, Company or any jobs keyword..." />
+        </div>
+    </div>
+</div>
 @if (Joblist is null)
 {
     <p><em>NO JOBS FOUND...</em></p>
@@ -43,22 +53,32 @@ else
 {
     <div class="row bg-white">
 
-   
-  @foreach(var jobs in Joblist)
-    {
-       
-                    <AdminJobComponent job="@jobs"></AdminJobComponent>
-    }
+
+        @foreach (var jobs in Joblist)
+        {
+
+            <AdminJobComponent job="@jobs"></AdminJobComponent>
+        }
     </div>
 }
 
 
 @code {
     List<Job> Joblist;
+    [Parameter]
+    public string Search { get; set; }
 
     protected override void OnInitialized()
     {
         storageService.pageTitle = "Jobs";
         Joblist = Jobservices.GetJobs();
+
+    }
+    public void GetJobs()
+    {
+        if (String.IsNullOrWhiteSpace(Search))
+            Joblist = Jobservices.GetJobs();
+        else
+            Joblist = Jobservices.getByTitle(Search);
     }
 }

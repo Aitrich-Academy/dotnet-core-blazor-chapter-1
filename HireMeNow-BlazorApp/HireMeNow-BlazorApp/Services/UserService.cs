@@ -1,4 +1,5 @@
-﻿using HireMeNow_BlazorApp.Interfaces;
+﻿using HireMeNow_BlazorApp.Enums;
+using HireMeNow_BlazorApp.Interfaces;
 using HireMeNow_BlazorApp.Models;
 using HireMeNow_BlazorApp.Repositories;
 
@@ -54,5 +55,15 @@ namespace HireMeNow_BlazorApp.Services
 		{
             userRepository.Logout();
 		}
-	}
+
+        public List<User> GetByFilter(string search, Roles role)
+        {
+            return userRepository.GetByFilter(search, role);
+        }
+
+        public void Remove(Guid userId)
+        {
+            userRepository.RemoveById(userId);
+        }
+    }
 }

@@ -2,6 +2,7 @@
 @using HireMeNow_BlazorApp.Models
 @inject IApplicationService applicatioService
 @inject NavigationManager NavigationManager
+@inject IUserService userService
 <style>
 
 	.proImg {
@@ -147,7 +148,7 @@
 					@*<img class="img-fluid float-left mr-2" src="jobseekerassets/images/Company.png" height="50px" width="50px">*@
 	<img class="img-fluid float-right" src="jobseekerassets/images/archive-minus.png" @onClick="SelectJob">
 	<h5 class="text-dark"><a href="javascript:void(0);" @onclick="() => SelectJob(job)">@job.Title</a></h5>  
-	<button class="btn btn-lg bg-primary float-right mx-autocol-md-4 ml-2 mr-2 pl-2 pr-2 " @onclick=ApplyJob>ApplyJob</button>
+	<button class="btn btn-lg bg-primary float-right mx-autocol-md-4 ml-2 mr-2 pl-2 pr-2 " @onclick="() => SelectJob(job)">View</button>
 				<a href="#">@job.Capacity</a> .Location : @job.Location<br><br>
 	<p>@job.Description</p>
 				<div class="row">
@@ -176,8 +177,10 @@
 	}
 	public void ApplyJob()
 	{
-		var userId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
-		applicatioService.AddApplication(job.Id, userId);
+		var loggedUser = userService.getLoggedUser();
+
+		//var userId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+		applicatioService.AddApplication(job.Id, loggedUser.Id);
 		NavigationManager.NavigateTo("/Jobseeker/MyApplication");
 	}
 }
